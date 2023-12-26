@@ -9,7 +9,7 @@ app.engine('.hbs', engine({
 }));
 app.set('view engine', '.hbs');
 app.set('views', './views');
-
+app.use('/img', express.static(__dirname + "/img"));
 
 const port = process.env.PORT | 3000;
 const host = process.env.HOST || 'localhost';
