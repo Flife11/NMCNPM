@@ -1,9 +1,68 @@
-<div style="position: relative; height: 10vh; width: 100%; " class="d-flex align-items-center">
+<div style="position: relative; height: 10vh; width: 100%;" class="d-flex align-items-center">
     <img src="/img/bg_header.png" style="position:absolute;height: 100%; width: 100%; z-index:4;">
 
     <div class="d-flex align-items-center" style="width: 100%;">
-        <img src="/img/nav_icon.png" style="z-index: 5; width:4%;">
+        <!-- The image -->
+        <img src="/img/nav_icon.png" style="z-index: 5; width:4%;" data-bs-toggle="offcanvas" href="#myOffcanvas"
+            role="button" aria-controls="myOffcanvas">
 
+        <!-- The offcanvas component -->
+        <div class="offcanvas offcanvas-start" tabindex="-1" id="myOffcanvas" aria-labelledby="myOffcanvasLabel"
+            style="width:20%;color:rgba(66,117,132)">
+            <div class="offcanvas-header">
+                <img class="border border-success rounded-circle" src="/img/logo_bank.png" style="width: 15%;">
+                <h5 id="myOffcanvasLabel" style=""><a href="#" style="text-decoration: none; color:inherit">Trang
+                        chủ</a></h5>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close">
+                </button>
+            </div>
+            <div class="offcanvas-body" style="padding: 0px;">
+                <!-- List group -->
+                <div class="list-group" style="color:rgba(66,117,132)">
+                    <a href="#" class="list-group-item list-group-item-action" style="color:rgba(66,117,132)">Mở sổ tiết
+                        kiệm</a>
+
+                    <a href="#collapse2" class="list-group-item list-group-item-action d-flex justify-content-between"
+                        data-bs-toggle="collapse" style="color:rgba(66,117,132)">
+                        Giao dịch
+                        <i class="fa-solid fa-caret-down"></i>
+                    </a>
+                    <div id="collapse2" class="collapse">
+                        <a href="#" class="list-group-item list-group-item-action" style="color:rgba(66,117,132)">Rút
+                            tiền</a>
+                        <a href="#" class="list-group-item list-group-item-action" style="color:rgba(66,117,132)">Gửi
+                            tiền</a>
+                    </div>
+
+                    <a href="#" class="list-group-item list-group-item-action" style="color:rgba(66,117,132)">Tra cứu
+                        sổ</a>
+
+                    <a href="#collapse4" class="list-group-item list-group-item-action d-flex justify-content-between"
+                        data-bs-toggle="collapse" style="color:rgba(66,117,132)">Lập báo cáo<i
+                            class="fa-solid fa-caret-down"></i></a>
+                    <div id="collapse4" class="collapse">
+                        <a href="#" class="list-group-item list-group-item-action" style="color:rgba(66,117,132)">Theo
+                            ngày</a>
+                        <a href="#" class="list-group-item list-group-item-action" style="color:rgba(66,117,132)">Theo
+                            tháng</a>
+                    </div>
+
+                    <a href="#collapse5" class="list-group-item list-group-item-action d-flex justify-content-between"
+                        data-bs-toggle="collapse" style="color:rgba(66,117,132)">Thay đổi quy định<i
+                            class="fa-solid fa-caret-down"></i></a>
+                    <div id="collapse5" class="collapse">
+                        <a href="#" class="list-group-item list-group-item-action"
+                            style="color:rgba(66,117,132)">Số kỳ hạn</a>
+                        <a href="#" class="list-group-item list-group-item-action"
+                            style="color:rgba(66,117,132)">Tiền/Ngày tối thiểu</a>
+                        <a href="#" class="list-group-item list-group-item-action"
+                            style="color:rgba(66,117,132)">Thay đổi lãi suất</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Logo -->
         <div class="d-flex justify-content-center align-items-center" style="z-index: 5; width:100%">
             <img src="/img/logo_bank.png" style="width: 4%;">
             <h2 style="color: white;text-shadow: 0px 4px 10px rgba(0,0,0,0.5);">&nbsp;&nbsp;10Bank</h2>
