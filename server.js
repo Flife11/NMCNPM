@@ -30,7 +30,7 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 })
 app.use("/", async (req, res, next) => {
-    res.render('home');
+    res.render('rules');
 });
 
 const server = http.createServer(app);   
