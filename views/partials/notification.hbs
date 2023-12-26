@@ -1,5 +1,5 @@
 <div id="myModal"
-    style="display: none; position: fixed; z-index: 10; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+    style=" position: fixed; z-index: 10; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
     <div style="position: relative; width: 30vw; margin: 15% auto;">
         <img src="/img/background.jpg" style="width: 100%; border-radius:20px">
         <div
@@ -14,8 +14,7 @@
     </div>
 </div>
 
-{{!-- mới đầu thì cái notibox này sẽ không hiện, khi nào cần hiện thì set lại cái display của nó thành '', sửa
-thông báo ở #notificationTextbox --}}
+{{!-- cái notibox này hiện hay không sẽ do handlebars quản lý, nếu khi render có biến error = true thì hiện --}}
 
 <script>
     $('#closeModal').click(function () {
