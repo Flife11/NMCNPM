@@ -1,0 +1,39 @@
+<h1 class="text-center fw-bold mb-5">Thêm/Xóa/Sửa loại kỳ hạn</h1>
+<div class="d-flex justify-content-around w-75 m-auto">
+    <div class="card rounded">
+        <div class="card-body flex-column justify-content-between align-items-center d-flex">
+            <div class="container">
+                <h2 class="text-center fw-bold">Thêm/Xóa</h2>
+                <span class="w-100 bg-dark" style="height: 2px; display: block; content: "";"></span>
+                <div class="mt-5 d-flex flex-column container">
+                    <label class="mb-3 fs-3 fw-bold text-center" for="kyhan">Loại kỳ hạn thêm/xóa: </label>            
+                    <input type="text" name="kyhan" placeholder="# Nhập loại kỳ hạn muốn thêm/xóa" style="font-size: 20px; width: 400px;">
+                </div>
+            </div>            
+            <div class="container flex-column justify-content-between align-items-center d-flex">
+                <button type="button" class="mt-3 fw-bold fs-4 w-75 text-black btn btn-success">Thêm</button>
+                <button type="button" class="mt-3 fw-bold fs-4 w-75 text-black btn btn-danger">Xóa</button>
+            </div>
+        </div>
+    </div>
+    <div class="card rounded">
+        <div class="card-body">            
+            <h2 class="text-center fw-bold">Sửa</h2>
+            <span class="w-100 bg-dark" style="height: 2px; display: block; content: "";"></span>
+            <div class="input-container mt-5">
+                <div class="d-flex flex-column container">
+                    <label class="mb-3 fs-3 fw-bold text-center" for="kyhan">Loại kỳ hạn gốc: </label>
+                    <input type="text" name="kyhan" placeholder="# Nhập loại kỳ hạn muốn sửa" style="font-size: 20px; width: 400px;">
+                </div>
+                <div class="d-flex flex-column container mt-5">
+                    <label class="mb-3 fs-3 fw-bold text-center" for="kyhan">Loại kỳ hạn sau khi sửa: </label>
+                    <input type="text" name="kyhan" placeholder="# Kỳ hạn sẽ sửa thành" style="font-size: 20px; width: 400px;">
+                </div>
+            </div>
+            <div class="container m-5">
+                <button type="button" class="mt-3 fw-bold fs-4 w-75 text-black btn btn-warning">Cập nhật</button>                
+            </div>
+        </div>
+    </div>
+</div>
+<button type="button" class="m-auto mt-5 ps-5 pe-5 d-flex fw-bold fs-4 text-black btn btn-secondary">Trở về</button>                
