@@ -1,0 +1,24 @@
+<div id="myModal"
+    style="display: none; position: fixed; z-index: 10; left: 0; top: 0; width: 100%; height: 100%; overflow: auto; background-color: rgba(0,0,0,0.4);">
+    <div style="position: relative; width: 30vw; margin: 15% auto;">
+        <img src="/img/background.jpg" style="width: 100%; border-radius:20px">
+        <div
+            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <h2 style="color: white;text-shadow: 0px 3px 5px rgba(0,0,0,0.5);">Thông báo</h2>
+            <textarea readonly id="notificationTextbox"
+                style="margin-top: 2px; border-radius: 20px; width: 80%; height: 50%; box-shadow: inset 0 0.5px 6px rgba(0,0,0,0.5);"></textarea>
+            <button id="closeModal" class="btn btn-light"
+                style="margin-top: 7px;border-radius: 10px; padding: 5px 40px; color:rgba(43,88,109);"><strong>Trở
+                    về</strong></button>
+        </div>
+    </div>
+</div>
+
+{{!-- mới đầu thì cái notibox này sẽ không hiện, khi nào cần hiện thì set lại cái display của nó thành '', sửa
+thông báo ở #notificationTextbox --}}
+
+<script>
+    $('#closeModal').click(function () {
+        $('#myModal').css('display', 'none');
+    });
+</script>
