@@ -131,3 +131,4 @@ dist
 
 .vs/
 node_modules/
+server.js
