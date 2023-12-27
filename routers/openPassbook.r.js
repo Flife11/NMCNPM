@@ -2,7 +2,7 @@ const app = require("express");
 const router = app.Router();
 
 router.get('/', (req, res) => {
-    res.render('openPassbook');
+    res.render('openPassbook', { title: 'Open Passbook' });
 });
 
 module.exports = router;
