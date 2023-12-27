@@ -3,6 +3,7 @@ const express = require("express");
 const { engine } = require('express-handlebars');
 const http= require('http');
 const app = express();
+const router = require('./routers/router');
 
 app.engine('.hbs', engine({
     extname: '.hbs'
@@ -29,6 +30,7 @@ app.use((err, req, res, next) => {
     console.log(err.stack);
     res.status(500).send('Something broke!');
 })
+
 app.use("/", async (req, res, next) => {
     res.render('deposit');
 });
