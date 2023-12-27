@@ -4,6 +4,7 @@ const express = require("express");
 const { engine } = require('express-handlebars');
 const http= require('http');
 const app = express();
+const router = require('./routers/router');
 
 const port = process.env.PORT | 3000;
 const host = process.env.HOST || 'localhost';
@@ -36,7 +37,7 @@ app.use(express.json());
 app.use((err, req, res, next) => {
     console.log(err.stack);
     res.status(500).send('Something broke!');
-})
+});
 
 // routing
 app.use('/view', viewPassbookRouter);
