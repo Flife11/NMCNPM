@@ -17,7 +17,7 @@
                         <h5><strong>Mã số:</strong></h5>
                     </div>
                     <div class="col-6">
-                        <input type="number" name="id" id="id" style="width: 100%;" >
+                        <input type="number" name="id" id="id" style="width: 100%;">
                     </div>
                     <div class="col">
 
@@ -29,14 +29,14 @@
                         <h5><strong>Họ tên: </strong></h5>
                     </div>
                     <div class="col-6">
-                        <input type="text" name="name" id="name" style="width: 100%;" >
+                        <input type="text" name="name" id="name" style="width: 100%;">
                     </div>
                     <div class="col">
 
                     </div>
-                </div>               
+                </div>
 
-                
+
                 <div class="row mb-4">
                     <div class="col" style="text-align: left;">
                         <h5><strong>Ngày rút:</strong></h5>
@@ -122,9 +122,19 @@
 
         } catch (error) {
             $('#notificationTextbox').val(error);
-             $('#myModal').css('display', '');
+            $('#myModal').css('display', '');
         }
     }
 
     $("#openPassportForm").on("submit", handleFormSubmit);
+
+    $(() => {
+        var today = new Date();
+        var dd = String(today.getDate()).padStart(2, '0');
+        var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+        var yyyy = today.getFullYear();
+
+        today = yyyy + '-' + mm + '-' + dd;
+        document.getElementById("date").value = today;
+    })
 </script>
