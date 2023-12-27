@@ -29,35 +29,21 @@ const db = {
     },
     db: sql,
 };
-
-(async function () {    
-    try {
-        const returnConfig = await db.connectDatabase(config);
-        const pool = new db.db.ConnectionPool(returnConfig);
-        const connection = await pool.connect();
-        const Request = new db.db.Request(connection);
-        const result1 = await Request.query('select * from LoaiTietKiem')
-            
-        console.log(result1.recordsets);
-    
-        // Stored procedure
-        
-        // let result2 = await pool.request()
-        //     .input('input_parameter', sql.Int, value)
-        //     .output('output_parameter', sql.VarChar(50))
-        //     .execute('procedure_name')
-        
-        // console.dir(result2)
-    } catch (err) {
-        console.log(err);
-        // ... error checks
-    }
-})()
 // simple query
 module.exports = {
-    query: async () => {
-        const connection = await mysql.createConnection(config);
-        const [results, ] = await connection.execute('SELECT * FROM `LoaiTietKiem`', []);
-        console.log(results); // results contains rows returned by server
+    getLoaiTietKiem: async function () {    
+        try {
+            const returnConfig = await db.connectDatabase(config);
+            const pool = new db.db.ConnectionPool(returnConfig);
+            const connection = await pool.connect();
+            const Request = new db.db.Request(connection);
+            const result1 = await Request.query('select * from LoaiTietKiem')
+                
+            console.log(result1.recordsets);
+        
+        } catch (err) {
+            console.log(err);
+            // ... error checks
+        }
     }
 }
