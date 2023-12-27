@@ -49,8 +49,6 @@ const RulesAdd = async (req, res, next) => {
         const MoTa = req.body["kyhan_them"];
         const SoThang = req.body["thang"];
         const LaiSuat = req.body["laisuat"];
-
-
         const result = {code: 0, err1: "", err2: "", err3: ""};
         try {
             if (MoTa=='' || LaiSuat=='') {
@@ -73,7 +71,8 @@ const RulesAdd = async (req, res, next) => {
 
 const RulesRemove = async (req, res, next) => {
     try {
-        console.log(req.body["kyhan_xoa"]);
+        const MoTa = req.body["kyhan_xoa"]; 
+        
         res.status(201).json({code: 1, err4: "err"});
     }
     catch (error) {
