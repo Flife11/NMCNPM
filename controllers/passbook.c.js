@@ -1,4 +1,3 @@
-const e = require("express");
 const SoTietKiem = require("../models/SoTietKiem.m");
 const LoaiTietKiem = require("../models/LoaiTietKiem.m");
 
@@ -36,7 +35,7 @@ const AddToDB = async (req, res, next) => {
         res.json({ success: "Mở sổ tiết kiệm thành công" });
     }
     catch (error) {
-        return res.json({ error: error });
+        return res.status(500).json({ error: error });
     }
 };
 

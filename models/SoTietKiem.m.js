@@ -13,7 +13,27 @@ module.exports = class SoTietKiem {
     }
 
     static async insert(tietKiem) {
-        db.InsertToTable(tbName, ["MaLoaiTietKiem", "HoTenKhachHang", "DiaChi", "CMND", "NgayMoSo", "SoTien",IDName],
+        try {
+            db.InsertToTable(tbName, ["MaLoaiTietKiem", "HoTenKhachHang", "DiaChi", "CMND", "NgayMoSo", "SoTien",IDName],
             [tietKiem.MaLoaiTietKiem, tietKiem.HoTenKhachHang, tietKiem.DiaChi, tietKiem.CMND, tietKiem.NgayMoSo, tietKiem.SoTien]);
+        } catch (error) {
+            throw(error);
+        }
+    }
+
+    static async selectbyID(ID) {
+        try {
+            return db.SelectFromTable(tbName, ["*"], `${IDName} = ${ID}`);
+        } catch (error) {
+            throw(error);
+        }
+    }
+
+    static async updateAmount(ID, amount) {
+        try {
+            db.Update(tbName, ["SoTien"], amount, `${IDName} = ${ID}`);
+        } catch (error) {
+            throw(error);
+        }
     }
 }
