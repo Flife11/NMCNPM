@@ -1,4 +1,4 @@
-const LoaiTietKiem = require("../models/LoaiTietKiem.c");
+const LoaiTietKiem = require("../models/LoaiTietKiem.m");
 
 const RulesRender = async (req, res, next) => {
     try {
@@ -56,7 +56,7 @@ const RulesAdd = async (req, res, next) => {
             if (MoTa=='' || LaiSuat=='') {
                 result.code = 1;
                 if (MoTa=='') result.err1="Mô tả về kỳ hạn không được để trống";
-                if (LaiSuat=='') result.err3="Lai suất không được để trống";
+                if (LaiSuat=='') result.err3="Lãi suất không được để trống";
             }
             else {
                 LoaiTietKiem.insert(new LoaiTietKiem(MoTa, SoThang, LaiSuat));                
