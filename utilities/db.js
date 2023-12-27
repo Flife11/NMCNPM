@@ -39,11 +39,10 @@ module.exports = {
             const Request = new db.db.Request(connection);
             const result1 = await Request.query('select * from LoaiTietKiem')
                 
-            console.log(result1.recordsets);
-        
+            return result1.recordsets;
         } catch (err) {
-            console.log(err);
-            // ... error checks
+            console.log(err);            
         }
-    }
+    },
+    
 }
