@@ -1,4 +1,4 @@
-
+const LoaiTietKiem = require("../models/LoaiTietKiem.c");
 
 const RulesRender = async (req, res, next) => {
     try {
@@ -46,9 +46,25 @@ const InterestRender = async (req, res, next) => {
 
 const RulesAdd = async (req, res, next) => {
     try {
-        res.render('interest_rate',{
-            pcss: () => "css/empty_css"
-        });
+        const MoTa = req.body["kyhan_them"];
+        const SoThang = req.body["thang"];
+        const LaiSuat = req.body["laisuat"];
+
+
+        const result = {code: 0, err1: "", err2: "", err3: ""};
+        try {
+            if (MoTa=='' || LaiSuat=='') {
+                result.code = 1;
+                if (MoTa=='') result.err1="Mô tả về kỳ hạn không được để trống";
+                if (LaiSuat=='') result.err3="Lai suất không được để trống";
+            }
+            else {
+                LoaiTietKiem.insert(new LoaiTietKiem(MoTa, SoThang, LaiSuat));                
+            }
+            res.status(201).json(result);
+        } catch (error) {
+            next(error);
+        }
     }
     catch (error) {
         next(error);
