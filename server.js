@@ -31,10 +31,9 @@ app.use((err, req, res, next) => {
     res.status(500).send('Something broke!');
 })
 
-app.use(router);
-// app.use("/", async (req, res, next) => {
-//     res.render('rules');
-// });
+app.use("/", async (req, res, next) => {
+    res.render('deposit');
+});
 
 const db = require('./utilities/db');
 //db.query();
