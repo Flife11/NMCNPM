@@ -33,5 +33,8 @@ app.use("/", async (req, res, next) => {
     res.render('interest_rate');
 });
 
+const db = require('./utilities/db');
+//db.query();
+
 const server = http.createServer(app);   
 server.listen(port, () => console.log(`Server is running at http://${host}:${port}`));
