@@ -68,6 +68,7 @@ module.exports = {
                 return `N'${v}'`;
             })
             //console.log(val);
+            console.log(`insert into ${tbName}(${colName.join()}) values(${val.join()})`)
             const result1 = await Request.query(`insert into ${tbName}(${colName.join()}) values(${val.join()})`);
             //console.log(result1);
             //return result1.recordsets;
@@ -84,7 +85,7 @@ module.exports = {
             if (condition!='') condition = `where ${condition}`;
             const result1 = await Request.query(`select ${colName.join()} from ${tbName} ${condition}`);
             //console.log(result1);
-            return result1.recordsets;
+            return result1.recordsets[0];
         } catch (err) {
             console.log(err);            
         }

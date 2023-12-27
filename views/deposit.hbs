@@ -17,7 +17,7 @@
                         <h5><strong>Mã số:</strong></h5>
                     </div>
                     <div class="col-6">
-                        <input type="number" name="id" id="id" style="width: 100%;" >
+                        <input type="number" name="id" id="id" style="width: 100%;">
                     </div>
                     <div class="col">
 
@@ -29,14 +29,14 @@
                         <h5><strong>Họ tên: </strong></h5>
                     </div>
                     <div class="col-6">
-                        <input type="text" name="name" id="name" style="width: 100%;" >
+                        <input type="text" name="name" id="name" style="width: 100%;">
                     </div>
                     <div class="col">
 
                     </div>
-                </div>               
+                </div>
 
-                
+
                 <div class="row mb-4">
                     <div class="col" style="text-align: left;">
                         <h5><strong>Ngày rút:</strong></h5>
@@ -91,7 +91,7 @@
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Accept: "application/json",
+                "Accept": "application/json"
             },
             body: formDataJsonString,
         };
@@ -99,11 +99,12 @@
         const response = await fetch(url, fetchOptions);
 
         if (!response.ok) {
-            const errorMessage = await response.text();
-            throw new Error(errorMessage);
+            const errorMessage = await response.json();
+            throw new Error(errorMessage.error);
         }
 
-        return response.json();
+        const successMessage = await response.json();
+        return successMessage.success;
     }
 
     async function handleFormSubmit(event) {
@@ -115,14 +116,14 @@
         try {
             const formData = new FormData(form);
             const responseData = await postFormDataAsJson({ url, formData });
-            if (responseData.code === 1) {
-                $('#userError').html(responseData.error1); //nhớ sửa chỗ này 
-                $('#confirmError').html(responseData.error3);
-            } else window.location.href = '/login';
+
+
+            $('#notificationTextbox').val(responseData);
+            $('#myModal').css('display', '');
 
         } catch (error) {
             $('#notificationTextbox').val(error);
-             $('#myModal').css('display', '');
+            $('#myModal').css('display', '');
         }
     }
 

@@ -1,13 +1,19 @@
 const db = require("../utilities/db");
 const tbName = "SoTietKiem";
-module.exports = class LoaiTietKiem {
-    constructor(_MoTa, _SoThang, _LaiSuat) {
-        this.MoTa = _MoTa;
-        this.SoThang = _SoThang;
-        this.LaiSuat = _LaiSuat;
+const IDName = "MaSoTietKiem";
+module.exports = class SoTietKiem {
+    constructor(_MaLoaiTietKiem, _HoTenKhachHang, _DiaChi, _CMND, _NgayMoSo, _SoTien, _TinhTrang) {
+        this.MaLoaiTietKiem = _MaLoaiTietKiem;
+        this.HoTenKhachHang = _HoTenKhachHang;
+        this.DiaChi = _DiaChi;
+        this.CMND = _CMND;
+        this.NgayMoSo = _NgayMoSo;
+        this.SoTien = _SoTien;
+        this.TinhTrang = _TinhTrang;
     }
-    
+
     static async insert(tietKiem) {
-        db.InsertToTable(tbName, ["MoTa", "SoThang", "LaiSuat", "MaLoaiTietKiem"], [tietKiem.MoTa, tietKiem.SoThang, tietKiem.LaiSuat]);
+        db.InsertToTable(tbName, ["MaLoaiTietKiem", "HoTenKhachHang", "DiaChi", "CMND", "NgayMoSo", "SoTien",IDName],
+            [tietKiem.MaLoaiTietKiem, tietKiem.HoTenKhachHang, tietKiem.DiaChi, tietKiem.CMND, tietKiem.NgayMoSo, tietKiem.SoTien]);
     }
 }

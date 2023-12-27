@@ -10,14 +10,15 @@
         <div style="background-color: white; width: 100%; height: 70vh; position: relative; z-index:2; top:6vh;border-radius:20px;
         box-shadow: inset 0 0.5px 6px rgba(0,0,0,0.5);padding:7vh">
 
-            <form action="" method="post" class="container" id="openPassportForm"> <!--nhớ sửa action chỗ này-->
+            <form action="/openPassbook" method="post" class="container" id="openPassportForm">
+                <!--nhớ sửa action chỗ này-->
 
                 <div class="row mb-4">
                     <div class="col" style="text-align: left;">
                         <h5><strong>Họ tên:</strong></h5>
                     </div>
                     <div class="col-6">
-                        <input type="text" name="name" id="name" style="width: 100%;" required>
+                        <input type="text" name="name" id="name" style="width: 100%;">
                     </div>
                     <div class="col">
 
@@ -29,7 +30,7 @@
                         <h5><strong>Địa chỉ: </strong></h5>
                     </div>
                     <div class="col-6">
-                        <input type="text" name="address" id="address" style="width: 100%;" required>
+                        <input type="text" name="address" id="address" style="width: 100%;">
                     </div>
                     <div class="col">
 
@@ -41,7 +42,8 @@
                         <h5><strong>Loại tiết kiệm: </strong></h5>
                     </div>
                     <div class="col-6">
-                        <select name="interest" id="interest" class="form-select form-select-sm border border-secondary">
+                        <select name="interest" id="interest"
+                            class="form-select form-select-sm border border-secondary">
                             {{#each interest}}
                             <option value="{{this.MaLoaiTietKiem}}">{{this.MoTa}}</option>
                             {{/each}}
@@ -57,7 +59,7 @@
                         <h5><strong>CCCD/CMND: </strong></h5>
                     </div>
                     <div class="col-6">
-                        <input type="text" name="cccd" id="cccd" style="width: 100%;" required>
+                        <input type="text" name="cccd" id="cccd" style="width: 100%;">
                     </div>
                     <div class="col">
 
@@ -69,7 +71,7 @@
                         <h5><strong>Ngày mở sổ:</strong></h5>
                     </div>
                     <div class="col-6">
-                        <input type="date" name="opendate" id="opendate" style="width: 100%;" required>
+                        <input type="date" name="opendate" id="opendate" style="width: 100%;">
                     </div>
                     <div class="col" style="text-align: left;">
                         <h5>&nbsp;&nbsp;<i class="fa-solid fa-calendar-days"></i></h5>
@@ -81,7 +83,7 @@
                         <h5><strong>Số tiền gửi:</strong></h5>
                     </div>
                     <div class="col-6">
-                        <input type="number" name="amount" id="amount" style="width: 100%;" required>
+                        <input type="number" name="amount" id="amount" style="width: 100%;">
                     </div>
                     <div class="col" style="text-align: left;">
                         <h5><strong>&nbsp;&nbsp;VND</strong></h5>
@@ -118,7 +120,7 @@
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Accept: "application/json",
+                "Accept": "application/json"
             },
             body: formDataJsonString,
         };
@@ -126,11 +128,12 @@
         const response = await fetch(url, fetchOptions);
 
         if (!response.ok) {
-            const errorMessage = await response.text();
-            throw new Error(errorMessage);
+            const errorMessage = await response.json();
+            throw new Error(errorMessage.error);
         }
 
-        return response.json();
+        const successMessage = await response.json();
+        return successMessage.success;
     }
 
     async function handleFormSubmit(event) {
@@ -142,14 +145,14 @@
         try {
             const formData = new FormData(form);
             const responseData = await postFormDataAsJson({ url, formData });
-            if (responseData.code === 1) {
-                $('#userError').html(responseData.error1); //nhớ sửa chỗ này 
-                $('#confirmError').html(responseData.error3);
-            } else window.location.href = '/login';
+
+            
+            $('#notificationTextbox').val(responseData);
+            $('#myModal').css('display', '');
 
         } catch (error) {
             $('#notificationTextbox').val(error);
-             $('#myModal').css('display', '');
+            $('#myModal').css('display', '');
         }
     }
 

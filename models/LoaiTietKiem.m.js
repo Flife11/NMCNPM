@@ -10,4 +10,8 @@ module.exports = class LoaiTietKiem {
     static async insert(tietKiem) {
         db.InsertToTable(tbName, ["MoTa", "SoThang", "LaiSuat", "MaLoaiTietKiem"], [tietKiem.MoTa, tietKiem.SoThang, tietKiem.LaiSuat]);
     }
+
+    static async select() {
+        return db.SelectFromTable(tbName, ["*"], "");
+    }
 }
