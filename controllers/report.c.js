@@ -66,7 +66,8 @@ const MonthReportRender = async (req, res, next) =>  {
     try {
         const data = await LoaiTietKiem.select(["*"]);
         res.render('reportMonth', {
-            ltk: () => data
+            ltk: () => data,
+            title: 'Month Report'
         })
     } catch (error) {
         next(error);
@@ -75,7 +76,7 @@ const MonthReportRender = async (req, res, next) =>  {
 
 const DayReportRender = async (req, res, next) =>  {
     try {
-        res.render('reportDay');
+        res.render('reportDay',{title: 'Day Report'});
     } catch (error) {
         next(error);
     }
@@ -83,7 +84,7 @@ const DayReportRender = async (req, res, next) =>  {
 
 const SelectReportRender = async (req, res, next) =>  {
     try {
-        res.render('selectReport');
+        res.render('selectReport',{title: 'Select Report'});
     } catch (error) {
         next(error);
     }

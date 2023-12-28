@@ -16,7 +16,8 @@ router.get('/', async (req, res, next) => {
         }
         //console.log(result);
         res.render('viewPassbook', {
-            data: () => result
+            data: () => result,
+            title: 'View Passbook'
         });
     } catch (error) {
         next(error);

@@ -5,7 +5,8 @@ const RulesRender = async (req, res, next) => {
     try {
         res.render('rules', {
             title: () => "rules",
-            pcss: () => "css/rules_css"
+            pcss: () => "css/rules_css",
+            title: 'Change Rules Selection'
         });
     }
     catch (error) {
@@ -19,7 +20,8 @@ const RuleChangeRender = async (req, res, next) => {
         res.render('rules_change', {
             title: () => "rule change",
             pcss: () => "css/empty_css",
-            data: () => data
+            data: () => data,
+            title: 'Rules Change'
         });
     }
     catch (error) {
@@ -31,7 +33,8 @@ const PeriodRender = async (req, res, next) => {
     try {
         res.render('period', {
             title: () => "period",
-            pcss: () => "css/empty_css"
+            pcss: () => "css/empty_css",
+            title: 'Change Period'
         });
     }
     catch (error) {
@@ -45,7 +48,8 @@ const InterestRender = async (req, res, next) => {
         res.render('interest_rate',{
             title: () => "interest",
             pcss: () => "css/empty_css",
-            data: () => data        
+            data: () => data    ,
+            title: 'Change Interest Rate'    
         });
     }
     catch (error) {
