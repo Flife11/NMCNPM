@@ -1,0 +1,106 @@
+<img src="/img/light_background.jpg" style="width:100%; position:absolute; z-index:-1">
+<div>
+    <h1 class="mt-5 text-primary-emphasis text-center fw-bold mb-5">Lập báo cáo theo ngày</h1>
+    <form action="/report/day" class="w-75 m-auto d-flex align-items-center mb-3"
+    method="post" name="dayReport" id="dayReport">
+        <div class="container">
+            <label class="fs-5 fw-bold text-center" for="date">Chọn ngày báo cáo: </label>  
+            <input type="date" name="date" id="date">
+        </div>
+        <button id="report-submit" type="button" class="fw-bold text-black btn btn-secondary">Xem</button>
+    </form>
+    <div class="card d-flex m-auto" style="width: 80%;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Số thứ tự</th>
+                    <th scope="col">Loại sổ</th>
+                    <th scope="col">Tổng thu</th>
+                    <th scope="col">Tổng chi</th>
+                    <th scope="col">Chênh lệch</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-5 d-flex justify-content-around w-75 m-auto">
+        <button type="button" onclick="history.back();" class=" ps-5 pe-5 fw-bold fs-4 text-black btn btn-secondary">Trở
+            về</button>
+    </div>
+</div>
+
+{{> notification}}
+
+<script>
+    async function postFormDataAsJson({ url, formData }) {
+        const plainFormData = Object.fromEntries(formData.entries());
+        const formDataJsonString = JSON.stringify(plainFormData);
+
+        const fetchOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: formDataJsonString,
+        };
+
+        const response = await fetch(url, fetchOptions);
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+
+        return response.json();
+    }
+
+    async function handleFormSubmit(event) {        
+        event.preventDefault();
+        const form = event.currentTarget;
+        const url = form.action;
+
+        try {
+            const formData = new FormData(form);
+            const responseData = await postFormDataAsJson({ url, formData });
+            return responseData;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }    
+
+    var utc = new Date().toJSON().slice(0,10)//.replace(/-/g,'/');
+    $("#date").val(utc);
+
+    $("#dayReport").on("submit", async (e) => {
+        try {        
+            const responseData = await handleFormSubmit(e);
+            const tr = responseData.map((d, index) => {
+                return `<tr>
+                    <th>${index+1}</th>
+                    <td>${d.LoaiTietKiem}</td>
+                    <td>${d.tongThu}</td>
+                    <td>${d.tongChi}</td>
+                    <td>${d.chenhLech}</td>
+                </tr>`
+            })
+            $("tbody").html(`${tr.join( )}`)
+        }
+        catch (error) {
+            $('#notificationTextbox').val(error)
+            $('#myModal').css('display', '');
+        } 
+    });
+
+    $('#closeModal').click(function () {
+        $('#myModal').css('display', 'none');
+        window.location.reload();
+    });
+    
+    $("#report-submit").on("click", () => {
+        $("#dayReport").trigger('submit');
+    })
+</script>

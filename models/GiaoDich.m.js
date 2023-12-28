@@ -6,7 +6,7 @@ const IDWithdraw = "MaPhieuRutTien";
 const IDDeposit = "MaPhieuGuiTien";
 
 module.exports = class GiaoDich {
-    constructor( _MaSoTietKiem, _NgayGiaoDich, _SoTienGiaoDich) {
+    constructor(_MaSoTietKiem, _NgayGiaoDich, _SoTienGiaoDich) {
         this.MaSoTietKiem = _MaSoTietKiem;
         this.NgayGiaoDich = _NgayGiaoDich;
         this.SoTienGiaoDich = _SoTienGiaoDich;
@@ -23,6 +23,34 @@ module.exports = class GiaoDich {
     static async insertDeposit(giaoDich) {
         try {
             db.InsertToTable(tbDeposit, ["MaSoTietKiem", "NgayGui", "SoTienGui", IDDeposit], [giaoDich.MaSoTietKiem, giaoDich.NgayGiaoDich, giaoDich.SoTienGiaoDich]);
+        } catch (error) {
+            throw (error);
+        }
+    }
+
+    static async selectWithdrawby(col, val) {
+        try {
+            return db.SelectFromTable(tbWithdraw, ["*"], `${col}='${val}'`);
+        } catch (error) {
+            throw (error);
+        }
+    }
+
+    static async selectDepositby(col, val) {
+        try {
+            return db.SelectFromTable(tbDeposit, ["*"], `${col}='${val}'`);
+        } catch (error) {
+            throw (error);
+        }
+    }
+
+    static async selectLastWithdrawOf(ID, month, year) {
+        try {
+            const data = await db.SelectFromTable(tbWithdraw, [`MAX(${IDWithdraw}) as m`, 'NgayRut'],
+                `MaSoTietKiem='${ID}' and MONTH(NgayRut)='${month}' and YEAR(NgayRut)='${year}' group by NgayRut`);
+            //console.log(data, 'giaodich');
+            if (data.length == 0) return undefined;
+            return data[0];
         } catch (error) {
             throw (error);
         }

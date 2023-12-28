@@ -11,6 +11,7 @@ const OpenPassbookRender = async (req, res, next) => {
         next(error);
     }
 };
+
 const AddToDB = async (req, res, next) => {
     try {
         const {interest, name, address, cccd, opendate, amount} = req.body;

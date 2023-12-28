@@ -54,4 +54,12 @@ module.exports = class SoTietKiem {
             throw(error);
         }
     }
+
+    static async selectbyMonthYear(attr, month, year) {
+        try {            
+            return db.SelectFromTable(tbName, ["*"], `MONTH(${attr})='${month}' and YEAR(${attr})='${year}'`);
+        } catch(error) {
+            throw(error);
+        }
+    }
 }

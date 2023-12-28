@@ -52,7 +52,8 @@ module.exports = class LoaiTietKiem {
     }
     
     static async selectbyName(name) {
-        try {            
+        try {
+            //console.log(name)
             const data = await db.SelectFromTable(tbName, ["*"], `MoTa = N'${name}'`);
             //console.log(data[0]);
             return data[0];
