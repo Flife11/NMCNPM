@@ -21,7 +21,8 @@ module.exports = class LoaiTietKiem {
     }
 
     static async updateName(MoTaCu, MoTaMoi) {
-        return db.UpdateTable(tbName, ["MoTa"], [MoTaMoi], ["MoTa"], [MoTaCu]);
+        let numMonth = parseInt(MoTaMoi.split(" ")[0]);
+        return db.UpdateTable(tbName, ["MoTa","SoThang"], [MoTaMoi,numMonth], ["MoTa"], [MoTaCu]);
     }
 
     static async select(colName) {
