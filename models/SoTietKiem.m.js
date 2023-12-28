@@ -44,4 +44,14 @@ module.exports = class SoTietKiem {
             throw(error);
         }
     }
+
+    // Không truyền tham số value sẽ là select all
+    static async selectbyAttr(attr, value) {
+        try {
+            if (value==undefined) return db.SelectFromTable(tbName, ['*'], "");
+            return db.SelectFromTable(tbName, ["*"], `${attr}=N'${value}'`);
+        } catch(error) {
+            throw(error);
+        }
+    }
 }
