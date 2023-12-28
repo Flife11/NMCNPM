@@ -124,7 +124,7 @@ const Withdraw = async (req, res, next) => {
                 return res.status(400).json({ error: `Chưa đến ngày đáo hạn, không thể rút!\n (Ngày mở sổ: ${passbook[0].NgayMoSo}\nKì hạn: ${interest.MoTa}\nNgày đáo hạn: ${ngayDaoHanObj})` });
             }
             if (amount > passbook[0].SoTien) {
-                return res.status(400).json({ error: "Số tiền rút không được lớn hơn số tiền hiện có" });
+                return res.status(400).json({ error: `Số tiền rút không được lớn hơn số tiền hiện có\nSố tiền hiện có: ${passbook[0].SoTien}` });
             }
 
             if (amount != passbook[0].SoTien) {
@@ -154,7 +154,7 @@ const Withdraw = async (req, res, next) => {
 
         //sổ không kỳ hạn
         if (amount > passbook[0].SoTien) {
-            return res.status(400).json({ error: "Số tiền rút không được lớn hơn số tiền hiện có" });
+            return res.status(400).json({ error: `Số tiền rút không được lớn hơn số tiền hiện có\nSố tiền hiện có: ${passbook[0].SoTien}` });
         }
         let total = amount + passbook[0].SoTien * interest.LaiSuat / 100 * parseInt(differenceInDays / 30);
         const giaoDich = new GiaoDich(id, date, total);
