@@ -1,36 +1,92 @@
 <h1 class="mt-5 text-primary-emphasis text-center fw-bold mb-5">Thay đổi quy định</h1>
-<div class="d-flex justify-content-around m-auto">
-    <div class="card w-75 rounded">        
-        <div class="card-body">
-            <div class="container p-3 rounded text-center">
-                <h3 class="row mt-3 text-center fw-bold">Tiền gửi tối thiểu</h3>
-                <div class="row mt-2">
-                    <div class="col fs-4 text-primary fw-bold">Ban đầu:</div>
-                    <div class="col fs-5 text-primary text-start">xx.xxx.xx</div>
-                    <div class="col fs-4 text-primary fw-bold">VNĐ</div>
-                </div>
-                <div class="row mt-3">
-                    <label for="minimum_money" class="col fs-4 text-primary fw-bold">Cập nhật:</label>
-                    <input class="col w-100 fs-5 text-start" type="text" name="minimum_money" id="minimum_money" placeholder="# Bỏ trống nếu không cần nhập">
-                    <div class="col fs-4 text-primary fw-bold">VNĐ</div>
-                </div>
-
-                <h3 class="row mt-2 text-center fw-bold">Thời gian gửi tối thiểu</h3>
-                <div class="row mt-2">
-                    <div class="col fs-4 text-primary fw-bold">Ban đầu:</div>
-                    <div class="col fs-5 text-primary text-start">yy</div>
-                    <div class="col fs-4 text-primary fw-bold">ngày</div>
-                </div>
-                <div class="row mt-3">
-                    <label for="minimum_day" class="col fs-4 text-primary fw-bold">Cập nhật:</label>
-                    <input class="col w-100 fs-5 text-start" type="text" name="minimum_day" id="minimum_day" placeholder="# Bỏ trống nếu không cần nhập">
-                    <div class="col fs-4 text-primary fw-bold">ngày</div>
+<form action="/rules/rule_update" method="post" name="ruleUpdate" id="ruleUpdate">
+    <div class="d-flex justify-content-around m-auto">
+        <div class="card w-75 rounded">
+            <div class="card-body">
+                <div class="container p-3 rounded text-center">
+                    {{#each data}}
+                        <h3 class="row mt-3 text-center fw-bold">{{this.TenQuyDinh}}</h3>
+                        <div class="row mt-2">                        
+                            <div class="col fs-4 text-primary fw-bold">Ban đầu:</div>
+                            <div class="col fs-5 text-primary text-start">{{this.MoTa}}</div>
+                            <div class="col fs-4 text-primary fw-bold">{{this.DonVi}}</div>
+                        </div>
+                        <div class="row mt-3">
+                            <label for="{{this.TenQuyDinh}}" class="col fs-4 text-primary fw-bold">Cập nhật:</label>
+                            <input class="col w-100 fs-5 text-start" type="text" name="{{this.TenQuyDinh}}" id="minimum_money" placeholder="# Bỏ trống nếu không cần nhập">
+                            <div class="col fs-4 text-primary fw-bold">{{this.DonVi}}</div>
+                        </div>
+                    {{/each}}                    
                 </div>
             </div>
-        </div>        
+        </div>
     </div>
-</div>    
-<div class="mt-5 d-flex justify-content-around w-75 m-auto">
-    <button type="button" onclick="history.back();" class=" ps-5 pe-5 fw-bold fs-4 text-black btn btn-secondary">Trở về</button>                
-    <button type="button" class="ps-5 pe-5 fw-bold fs-4 text-black btn btn-success">Xác nhận</button>                
-</div>
+    <div class="mt-5 d-flex justify-content-around w-75 m-auto">
+        <button type="button" onclick="history.back();" class=" ps-5 pe-5 fw-bold fs-4 text-black btn btn-secondary">Trở về</button>
+        <button type="button" id="rule-submit" class="ps-5 pe-5 fw-bold fs-4 text-black btn btn-success">Xác nhận</button>
+    </div>
+</form>
+
+{{> notification}}
+
+<script>
+    async function postFormDataAsJson({ url, formData }) {
+        const plainFormData = Object.fromEntries(formData.entries());
+        const formDataJsonString = JSON.stringify(plainFormData);
+
+        const fetchOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: formDataJsonString,
+        };
+
+        const response = await fetch(url, fetchOptions);
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+
+        return response.json();
+    }
+
+    async function handleFormSubmit(event) {        
+        event.preventDefault();
+        const form = event.currentTarget;
+        const url = form.action;
+
+        try {
+            const formData = new FormData(form);
+            const responseData = await postFormDataAsJson({ url, formData });
+            return responseData;
+        }
+        catch (error) {
+            console.error(error);
+        }
+    }    
+
+    $("#ruleUpdate").on("submit", async (e) => {
+        try {        
+            const responseData = await handleFormSubmit(e);    
+            $('#notificationTextbox').val(responseData.noti)
+            $('#myModal').css('display', '');
+        }
+        catch (error) {
+            $('#notificationTextbox').val(error)
+            $('#myModal').css('display', '');
+        }        
+    });   
+
+    $('#closeModal').click(function () {
+        $('#myModal').css('display', 'none');
+        window.location.reload();
+    });
+    
+    $("#rule-submit").on("click", () => {
+        console.log(1);
+        $("#ruleUpdate").trigger('submit');
+    })
+</script>
