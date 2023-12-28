@@ -88,6 +88,7 @@ const PeriodRemove = async (req, res, next) => {
         const result = {noti: ""};
         const rowaffect = await LoaiTietKiem.deleteLTT(MoTa);
         result.noti = `Đã xóa ${rowaffect} loại kỳ hạn`;
+        if(rowaffect==undefined) result.noti = `Không thể xóa loại kỳ hạn này (đang có sổ tiết kiệm thuộc loại này)`;
         res.status(201).json(result);
     }
     catch (error) {
