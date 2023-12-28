@@ -1,0 +1,120 @@
+<img src="/img/light_background.jpg" style="width:100%; position:absolute; z-index:-1">
+<div>
+    <h1 class="mt-5 text-primary-emphasis text-center fw-bold mb-5">Tra cứu sổ</h1>
+    <form action="/view/search" class="w-75 m-auto d-flex align-items-center mb-3"
+    method="post" name="search" id="search">
+        <div class="container">
+            <label class="fs-5 fw-bold text-center" for="attribute">Tra cứu theo: </label>
+            <select name="attribute" id="dropdown">
+                <optgroup label="# Chọn loại thông tin tra cứu">
+                    <option value="" disabled hidden># Chọn loại thông tin tra cứu</option>
+                    <option value="MaSoTietKiem">Mã số</option>
+                    <option value="HoTenKhachHang">Tên khách hàng</option>
+                    <option value="MaLoaiTietKiem">Loại sổ</option>
+                </optgroup>
+            </select>
+        </div>
+        <div class="container">
+            <label class="fs-5 fw-bold text-center" for="searchValue">Thông tin tra cứu: </label>
+            <input type="text" name="searchValue" placeholder="# Nhập thông tin tra cứu"
+                            style="font-size: 16px; width:300px;">
+        </div>
+        <button id="search-submit" type="button" class="fw-bold text-black btn btn-secondary">Xem</button>
+    </form>
+    <div class="card d-flex m-auto" style="width: 80%;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Mã số</th>
+                    <th scope="col">Khách hàng</th>
+                    <th scope="col">Loại số</th>
+                    <th scope="col">Số dư</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{#each data}}
+                <tr>
+                    <th>{{this.MaSoTietKiem}}</th>
+                    <td>{{this.HoTenKhachHang}}</td>
+                    <td>{{this.MaLoaiTietKiem}}</td>
+                    <td>{{this.SoTien}}</td>
+                </tr>
+                {{/each}}
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-5 d-flex justify-content-around w-75 m-auto">
+        <button type="button" onclick="history.back();" class=" ps-5 pe-5 fw-bold fs-4 text-black btn btn-secondary">Trở
+            về</button>
+    </div>
+</div>
+
+{{> notification}}
+
+<script>
+    async function postFormDataAsJson({ url, formData }) {
+        const plainFormData = Object.fromEntries(formData.entries());
+        const formDataJsonString = JSON.stringify(plainFormData);
+
+        const fetchOptions = {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+            },
+            body: formDataJsonString,
+        };
+
+        const response = await fetch(url, fetchOptions);
+
+        if (!response.ok) {
+            const errorMessage = await response.text();
+            throw new Error(errorMessage);
+        }
+
+        return response.json();
+    }
+
+    async function handleFormSubmit(event) {        
+        event.preventDefault();
+        const form = event.currentTarget;
+        const url = form.action;
+
+        try {
+            const formData = new FormData(form);
+            const responseData = await postFormDataAsJson({ url, formData });
+            return responseData;
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }    
+
+    $("#search").on("submit", async (e) => {
+        try {        
+            const responseData = await handleFormSubmit(e);
+            const tr = responseData.map((d) => {
+                return `<tr>
+                    <th>${d.MaSoTietKiem}</th>
+                    <td>${d.HoTenKhachHang}</td>
+                    <td>${d.MaLoaiTietKiem}</td>
+                    <td>${d.SoTien}</td>
+                </tr>`
+            })
+            $("tbody").html(`${tr.join( )}`)
+        }
+        catch (error) {
+            $('#notificationTextbox').val(error)
+            $('#myModal').css('display', '');
+        } 
+    });
+
+    $('#closeModal').click(function () {
+        $('#myModal').css('display', 'none');
+        window.location.reload();
+    });
+    
+    $("#search-submit").on("click", () => {
+        $("#search").trigger('submit');
+    })
+</script>

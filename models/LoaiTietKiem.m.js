@@ -15,14 +15,6 @@ module.exports = class LoaiTietKiem {
             throw (error);
         }
     }
-
-    static async select() {
-        try {
-            return db.SelectFromTable(tbName, ["*"], "");
-        } catch (error) {
-            throw (error);
-        }
-    }
     
     static async deleteLTT(MoTa) {
         return db.DeleteLTT(tbName, MoTa);
@@ -51,7 +43,19 @@ module.exports = class LoaiTietKiem {
 
     static async selectbyID(ID) {
         try {
-            return db.SelectFromTable(tbName, ["*"], `${IDName} = ${ID}`);
+            const data = await db.SelectFromTable(tbName, ["*"], `${IDName} = ${ID}`);
+            //console.log(data[0]);
+            return data[0];
+        } catch (error) {
+            throw (error);
+        }
+    }
+    
+    static async selectbyName(name) {
+        try {            
+            const data = await db.SelectFromTable(tbName, ["*"], `MoTa = N'${name}'`);
+            //console.log(data[0]);
+            return data[0];
         } catch (error) {
             throw (error);
         }
