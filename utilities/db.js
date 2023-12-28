@@ -79,13 +79,13 @@ module.exports = {
     },
 
     SelectFromTable: async function (tbName, colName, condition) {
-        try { 
+        try {             
             const pool = new sql.ConnectionPool(config);
             const connection = await pool.connect();
             const Request = new sql.Request(connection);
             if (condition!='') condition = `where ${condition}`;
-            // console.log(condition);
-            // console.log(colName);
+            
+            //console.log(condition);
             const result1 = await Request.query(`select ${colName.join()} from ${tbName} ${condition}`);
             //console.log(result1);
             return result1.recordset;

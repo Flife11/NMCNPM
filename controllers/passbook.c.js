@@ -3,13 +3,14 @@ const LoaiTietKiem = require("../models/LoaiTietKiem.m");
 
 const OpenPassbookRender = async (req, res, next) => {
     try {
-        let interest = await LoaiTietKiem.select();
+        let interest = await LoaiTietKiem.select(['*']);
         res.render('openPassbook', { title: 'Open Passbook' , interest: interest});
     }
     catch (error) {
         next(error);
     }
 };
+
 const AddToDB = async (req, res, next) => {
     try {
         const {interest, name, address, cccd, opendate, amount} = req.body;
