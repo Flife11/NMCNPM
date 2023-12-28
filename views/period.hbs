@@ -3,7 +3,8 @@
     <h1 class="mt-5 text-center fw-bold mb-5" style="color:rgba(43,99,137,255);text-shadow: 0px 1px 3px rgba(0,0,0,0.3);">
         Thêm/Xóa/Sửa loại kỳ hạn</h1>
     <div class="d-flex justify-content-around m-auto">
-        <div class="card rounded" style="margin: 2vh; width:33%">
+        <div class="card " style="margin: 2vh; width:33%;border-radius:20px;
+        box-shadow: inset 0 0.5px 6px rgba(0,0,0,0.5);">
             <div class="card-body flex-column justify-content-between align-items-center d-flex">
                 <form class="container" action="/rules/add" id="rules-add">
                     <h2 class="text-center fw-bold">Thêm</h2>
@@ -32,7 +33,8 @@
                 </div>
             </div>
         </div>
-        <div class="card rounded" style="margin: 2vh; width:33%">
+        <div class="card " style="margin: 2vh; width:33%;border-radius:20px;
+        box-shadow: inset 0 0.5px 6px rgba(0,0,0,0.5);">
             <form action="/rules/remove" method="post" name="remove" id="rules-remove" class="card-body flex-column justify-content-between align-items-center d-flex">
                 <div class="container">
                     <h2 class="text-center fw-bold">Xóa</h2>
@@ -48,7 +50,8 @@
                 </div>
             </form>
         </div>
-        <div class="card rounded" style="margin: 2vh;width:33%">
+        <div class="card " style="margin: 2vh;width:33%;border-radius:20px;
+        box-shadow: inset 0 0.5px 6px rgba(0,0,0,0.5);">
             <form class="card-body" method="post" name="edit" action="/rules/edit" id="rules-edit">
                 <h2 class="text-center fw-bold">Sửa</h2>
                 <span class="w-100 bg-dark" style="height: 2px; display: block; content: "";"></span>
@@ -73,7 +76,7 @@
         </div>
     </div>
     <button type="button" onclick="history.back();"
-        class="m-auto mt-5 ps-5 pe-5 d-flex fw-bold fs-4 text-black btn btn-secondary">Trở về</button>
+        class="m-auto mt-5 ps-5 pe-5 d-flex fw-bold fs-4 text-black btn btn-light">Trở về</button>
 </div>
 
 {{> notification}}
