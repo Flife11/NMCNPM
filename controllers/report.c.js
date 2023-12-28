@@ -73,6 +73,22 @@ const MonthReportRender = async (req, res, next) =>  {
     }
 }
 
+const DayReportRender = async (req, res, next) =>  {
+    try {
+        res.render('reportDay');
+    } catch (error) {
+        next(error);
+    }
+}
+
+const SelectReportRender = async (req, res, next) =>  {
+    try {
+        res.render('selectReport');
+    } catch (error) {
+        next(error);
+    }
+}
+
 async function SoMo(month, year, mota) {
     const res = {};
     const stk = await SoTietKiem.selectbyMonthYear("NgayMoSo", month, year); 
@@ -96,7 +112,7 @@ async function SoDong(month, year, mota) {
     const stk = await SoTietKiem.selectbyAttr();
     const l = await LoaiTietKiem.selectbyName(mota);   
     const closedSTK = stk.map((s) => {
-        if (s.TinhTrang==true) return s;        
+        if (s.TinhTrang==0 && l.MaLoaiTietKiem==s.MaLoaiTietKiem) return s;        
     })
     for (var s of closedSTK) {
         if (s!=undefined) {
@@ -154,4 +170,4 @@ const MonthReport = async (req, res, next) => {
     }
 };
 
-module.exports = {DayReport, MonthReport, MonthReportRender};
+module.exports = {DayReport, MonthReport, MonthReportRender,DayReportRender, SelectReportRender};

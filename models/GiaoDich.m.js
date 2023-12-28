@@ -46,6 +46,7 @@ module.exports = class GiaoDich {
 
     static async selectLastWithdrawOf(ID, month, year) {
         try {
+            //console.log(ID, month, year)
             const data = await db.SelectFromTable(tbWithdraw, [`MAX(${IDWithdraw}) as m`, 'NgayRut'],
                 `MaSoTietKiem='${ID}' and MONTH(NgayRut)='${month}' and YEAR(NgayRut)='${year}' group by NgayRut`);
             //console.log(data, 'giaodich');

@@ -1,13 +1,13 @@
 <img src="/img/light_background.jpg" style="width:100%; position:absolute; z-index:-1">
 <div>
-    <h1 class="mt-5 text-primary-emphasis text-center fw-bold mb-5">Lập báo cáo theo ngày</h1>
+    <h1 class="mt-5 text-center fw-bold mb-5" style="color:rgba(43,99,137,255);text-shadow: 0px 1px 3px rgba(0,0,0,0.3);">Lập báo cáo theo ngày</h1>
     <form action="/report/day" class="w-75 m-auto d-flex align-items-center mb-3"
     method="post" name="dayReport" id="dayReport">
         <div class="container">
             <label class="fs-5 fw-bold text-center" for="date">Chọn ngày báo cáo: </label>  
             <input type="date" name="date" id="date">
         </div>
-        <button id="report-submit" type="button" class="fw-bold text-black btn btn-secondary">Xem</button>
+        <button id="report-submit" type="button" class="fw-bold text-black btn btn-light">Xem</button>
     </form>
     <div class="card d-flex m-auto" style="width: 80%;">
         <table class="table">
@@ -26,7 +26,7 @@
         </table>
     </div>
     <div class="mt-5 d-flex justify-content-around w-75 m-auto">
-        <button type="button" onclick="history.back();" class=" ps-5 pe-5 fw-bold fs-4 text-black btn btn-secondary">Trở
+        <button type="button" onclick="history.back();" class=" ps-5 pe-5 fw-bold fs-4 text-black btn btn-light">Trở
             về</button>
     </div>
 </div>

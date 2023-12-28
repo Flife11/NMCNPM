@@ -1,17 +1,13 @@
 const app = require("express");
-const { MonthReport, DayReport, MonthReportRender } = require("../controllers/report.c");
+const { MonthReport, DayReport, MonthReportRender,DayReportRender,SelectReportRender } = require("../controllers/report.c");
 const router = app.Router();
 
 
 router.get('/month', MonthReportRender);
 
-router.get('/day', (req, res) => {
-    res.render('reportDay');
-});
+router.get('/day', DayReportRender);
 
-router.get('/', (req, res) => {
-    res.render('selectReport');
-});
+router.get('/', SelectReportRender);
 
 router.post('/month', MonthReport);
 
