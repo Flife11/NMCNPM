@@ -1,6 +1,6 @@
 <div
     style="width:100%; height:auto;position:absolute; z-index:1; display: flex; justify-content: center; align-items: center;">
-    <img src="img/light_background.jpg" style="width:100%; position:absolute; z-index:1">
+    <img src="/img/light_background.jpg" style="width:100%; position:absolute; z-index:1">
 
     <div style="width:80%;height:auto; text-align:center">
         <h1
@@ -10,14 +10,14 @@
         <div style="background-color: white; width: 100%; height: 50vh; position: relative; z-index:2; top:6vh;border-radius:20px;
         box-shadow: inset 0 0.5px 6px rgba(0,0,0,0.5);padding:7vh">
 
-            <form action="" method="post" class="container" id="openPassportForm"> <!--nhớ sửa action chỗ này-->
+            <form action="/transaction/deposit" method="post" class="container" id="openPassportForm"> <!--nhớ sửa action chỗ này-->
 
                 <div class="row mb-4">
                     <div class="col" style="text-align: left;">
-                        <h5><strong>Mã số:</strong></h5>
+                        <h5><strong>Mã sổ:</strong></h5>
                     </div>
                     <div class="col-6">
-                        <input type="number" name="id" id="id" style="width: 100%;" >
+                        <input type="number" name="id" id="id" style="width: 100%;">
                     </div>
                     <div class="col">
 
@@ -29,17 +29,17 @@
                         <h5><strong>Họ tên: </strong></h5>
                     </div>
                     <div class="col-6">
-                        <input type="text" name="name" id="name" style="width: 100%;" >
+                        <input type="text" name="name" id="name" style="width: 100%;">
                     </div>
                     <div class="col">
 
                     </div>
-                </div>               
+                </div>
 
-                
+
                 <div class="row mb-4">
                     <div class="col" style="text-align: left;">
-                        <h5><strong>Ngày rút:</strong></h5>
+                        <h5><strong>Ngày gửi:</strong></h5>
                     </div>
                     <div class="col-6">
                         <input type="date" name="date" id="date" style="width: 100%;" required>
@@ -61,7 +61,7 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-center align-items-center" style="width:100%;">
-                    <a href="#" class="btn btn-light" style="margin-top: 7px;border-radius: 10px; padding: 5px 40px; color:rgba(43,88,109);z-index:2;position:relative; margin: 10vh;
+                    <a href="/transaction" class="btn btn-light" style="margin-top: 7px;border-radius: 10px; padding: 5px 40px; color:rgba(43,88,109);z-index:2;position:relative; margin: 10vh;
                 box-shadow: 0 1px 3px rgba(0,0,0,0.3);"> <!--nhớ sửa href chỗ này-->
                         <h5><strong>Trở về</strong></h5>
                     </a>
@@ -91,7 +91,7 @@
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                Accept: "application/json",
+                "Accept": "application/json"
             },
             body: formDataJsonString,
         };
@@ -99,11 +99,12 @@
         const response = await fetch(url, fetchOptions);
 
         if (!response.ok) {
-            const errorMessage = await response.text();
-            throw new Error(errorMessage);
+            const errorMessage = await response.json();
+            throw new Error(errorMessage.error);
         }
 
-        return response.json();
+        const successMessage = await response.json();
+        return successMessage.success;
     }
 
     async function handleFormSubmit(event) {
@@ -115,14 +116,14 @@
         try {
             const formData = new FormData(form);
             const responseData = await postFormDataAsJson({ url, formData });
-            if (responseData.code === 1) {
-                $('#userError').html(responseData.error1); //nhớ sửa chỗ này 
-                $('#confirmError').html(responseData.error3);
-            } else window.location.href = '/login';
+
+
+            $('#notificationTextbox').val(responseData);
+            $('#myModal').css('display', '');
 
         } catch (error) {
             $('#notificationTextbox').val(error);
-             $('#myModal').css('display', '');
+            $('#myModal').css('display', '');
         }
     }
 

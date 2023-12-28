@@ -1,16 +1,13 @@
 const app = require("express");
 const router = app.Router();
+const {DepositRender,WithdrawRender,selectTransactionRender,Deposit,Withdraw} = require('../controllers/transaction.c');
 
-router.get('/deposit', (req, res) => {
-    res.render('deposit');
-});
+router.get('/deposit', DepositRender);
 
-router.get('/withdraw', (req, res) => {
-    res.render('withdraw');
-});
+router.get('/withdraw', WithdrawRender);
 
-router.get('/', (req, res) => {
-    res.render('selectTransaction');
-});
+router.get('/', selectTransactionRender);
+
+router.post('/deposit', Deposit);
 
 module.exports = router;
