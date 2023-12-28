@@ -31,7 +31,15 @@ module.exports = class SoTietKiem {
 
     static async updateAmount(ID, amount) {
         try {
-            db.Update(tbName, ["SoTien"], amount, `${IDName} = ${ID}`);
+            db.UpdateTable(tbName, ["SoTien"], [amount] ,[IDName],[ID]);
+        } catch (error) {
+            throw(error);
+        }
+    }
+
+    static async updateStatus(ID, status) {
+        try {
+            db.UpdateTable(tbName, ["TinhTrang"], [status] ,[IDName],[ID]);
         } catch (error) {
             throw(error);
         }

@@ -15,14 +15,6 @@ module.exports = class LoaiTietKiem {
             throw (error);
         }
     }
-
-    static async select() {
-        try {
-            return db.SelectFromTable(tbName, ["*"], "");
-        } catch (error) {
-            throw (error);
-        }
-    }
     
     static async deleteLTT(MoTa) {
         return db.DeleteLTT(tbName, MoTa);

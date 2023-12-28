@@ -10,7 +10,7 @@
         <div style="background-color: white; width: 100%; height: 50vh; position: relative; z-index:2; top:6vh;border-radius:20px;
         box-shadow: inset 0 0.5px 6px rgba(0,0,0,0.5);padding:7vh">
 
-            <form action="" method="post" class="container" id="openPassportForm"> <!--nhớ sửa action chỗ này-->
+            <form action="/transaction/withdraw" method="post" class="container" id="openPassportForm"> <!--nhớ sửa action chỗ này-->
 
                 <div class="row mb-4">
                     <div class="col" style="text-align: left;">
@@ -42,7 +42,7 @@
                         <h5><strong>Ngày rút:</strong></h5>
                     </div>
                     <div class="col-6">
-                        <input type="date" name="date" id="date" style="width: 100%;" required>
+                        <input type="date" name="date" id="date" style="width: 100%;" >
                     </div>
                     <div class="col" style="text-align: left;">
                         <h5>&nbsp;&nbsp;<i class="fa-solid fa-calendar-days"></i></h5>
@@ -54,7 +54,7 @@
                         <h5><strong>Số tiền rút:</strong></h5>
                     </div>
                     <div class="col-6">
-                        <input type="number" name="amount" id="amount" style="width: 100%;" required>
+                        <input type="number" name="amount" id="amount" style="width: 100%;" >
                     </div>
                     <div class="col" style="text-align: left;">
                         <h5><strong>&nbsp;&nbsp;VND</strong></h5>
