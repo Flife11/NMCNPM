@@ -62,7 +62,6 @@ const Deposit = async (req, res, next) => {
         }
         //check min amount
         let minAmount = await QuyDinh.selectbyName("Tiền gửi tối thiểu");
-        minAmount = minAmount[0];
         if (amount < minAmount.MoTa) {
             return res.status(400).json({ error: `Số tiền gửi phải lớn hơn ${minAmount.MoTa} ${minAmount.DonVi}` });
         }
@@ -107,7 +106,6 @@ const Withdraw = async (req, res, next) => {
 
         //check if passbook is able to withdraw (after x days)
         let minDay = await QuyDinh.selectbyName("Thời gian gửi tối thiểu");
-        minDay = minDay[0];
         // Convert strings to Date objects
         let dateObj = new Date(date);
         let ngayMoSoObj = new Date(passbook[0].NgayMoSo);
