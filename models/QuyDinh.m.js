@@ -23,7 +23,8 @@ module.exports = class QuyDinh {
 
     static async selectbyName(name) {
         try {
-            return db.SelectFromTable(tbName, ["*"], `TenQuyDinh = N'${name}'`);
+            const data= await db.SelectFromTable(tbName, ["*"], `TenQuyDinh = N'${name}'`);
+            return data[0];
         } catch (error) {
             throw (error);
         }

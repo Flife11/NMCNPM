@@ -72,7 +72,7 @@ const Deposit = async (req, res, next) => {
         await GiaoDich.insertDeposit(giaoDich);
         await SoTietKiem.updateAmount(id, newAmount);
 
-        return res.status(200).json({ success: "Gửi tiền thành công!" });
+        return res.status(200).json({ success: `Gửi tiền thành công!\nSố dư mới: ${newAmount}` });
     } catch (error) {
         console.log(error)
         return res.status(500).json({ error: error });

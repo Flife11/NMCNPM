@@ -28,7 +28,6 @@ const AddToDB = async (req, res, next) => {
 
         //check min amount
         let minAmount = await QuyDinh.selectbyName("Tiền gửi tối thiểu");
-        minAmount = minAmount[0];
         if(amount < minAmount.MoTa) {
             return res.status(400).json({ error: `Số tiền gửi phải lớn hơn ${minAmount.MoTa} ${minAmount.DonVi}` });
         }
