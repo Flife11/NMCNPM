@@ -1,8 +1,8 @@
 const sql = require('mssql')
 
 const config = {
-  user: "sa",
-  password: "0902894946orenji",
+  user: "sang123",
+  password: "1234",
   database: "QuanLySoTietKiem",
   server: 'localhost',
   pool: {
@@ -77,14 +77,63 @@ module.exports = {
     },
 
     SelectFromTable: async function (tbName, colName, condition) {
-        try {            
+        try { 
             const pool = new sql.ConnectionPool(config);
             const connection = await pool.connect();
             const Request = new sql.Request(connection);
             if (condition!='') condition = `where ${condition}`;
+            // console.log(condition);
+            // console.log(colName);
             const result1 = await Request.query(`select ${colName.join()} from ${tbName} ${condition}`);
             //console.log(result1);
-            return result1.recordsets;
+            return result1.recordset;
+        } catch (err) {
+            console.log(err);            
+        }
+    },
+
+    DeleteLTT: async function (tbName, MoTa) {
+        try {            
+            const pool = new sql.ConnectionPool(config);
+            const connection = await pool.connect();
+            const Request = new sql.Request(connection);
+            
+            const result1 = await Request.query(`delete ${tbName} where MoTa=N'${MoTa}'`);
+            //console.log(result1.rowsAffected[0]);
+            return result1.rowsAffected[0];
+        } catch (err) {
+            console.log(err);            
+        }
+    },
+
+    UpdateTable: async function (tbName, colName, val, conCol, conVal) {
+        try {
+            const pool = new sql.ConnectionPool(config);
+            const connection = await pool.connect();
+            const Request = new sql.Request(connection);
+
+            const set = colName.map((col, index) => {
+                //console.log(typeof(val[index]));
+                if (typeof(val[index])=='string')
+                return `${col}=N'${val[index]}'`;
+                else return `${col}=${val[index]}`;
+            })
+            
+            const condition = conCol.map((col, i) => {
+                //console.log(typeof(conVal[i]));
+                if (typeof(conVal[i])=='string')
+                return `${col}=N'${conVal[i]}'`;
+                else return `${col}=${conVal[i]}`;
+            })
+            //console.log(set);
+            //console.log(condition);
+            
+            var conString="";
+            if (condition.length!=0) conString = `where ${condition.join(' and ')}`;
+
+            const result1 = await Request.query(`update ${tbName} set ${set.join()} ${conString}`);
+            //console.log(result1.rowsAffected[0]);
+            return result1.rowsAffected[0];
         } catch (err) {
             console.log(err);            
         }

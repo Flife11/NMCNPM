@@ -37,8 +37,7 @@
                 <div class="mt-5 d-flex flex-column container">
                     <label class="mb-3 fs-3 fw-bold text-center" for="kyhan_xoa">Loại kỳ hạn xóa: </label>
                     <input type="text" name="kyhan_xoa" placeholder="# Nhập loại kỳ hạn muốn xóa"
-                        style="font-size: 20px; width: 400px;">
-                    <div class="err4 text-danger"></div>
+                        style="font-size: 20px; width: 400px;">                    
                 </div>
             </div>
             <div class="container flex-column justify-content-between align-items-center d-flex">
@@ -73,7 +72,7 @@
 <button type="button" onclick="history.back();"
     class="m-auto mt-5 ps-5 pe-5 d-flex fw-bold fs-4 text-black btn btn-secondary">Trở về</button>
 
-{{> (notification)}}
+{{> notification}}
 
 <script>
     async function postFormDataAsJson({ url, formData }) {
@@ -99,8 +98,7 @@
         return response.json();
     }
 
-    async function handleFormSubmit(event) {
-        console.log(1);
+    async function handleFormSubmit(event) {        
         event.preventDefault();
         const form = event.currentTarget;
         const url = form.action;
@@ -115,40 +113,52 @@
         }
     }
 
+    $('#closeModal').click(function () {
+        $('#myModal').css('display', 'none');
+        window.location.reload();
+    });
+
     $("#rules-add").on("submit", async (e) => {
-        const responseData = await handleFormSubmit(e);
-        if (responseData.code === 1) {    
-            $(`.err1`).html(responseData[`err1`]);
-            $(`.err2`).html(responseData[`err2`]);
-            $(`.err3`).html(responseData[`err3`]);
-        } else {
-            $('#notificationTextbox').val('Thêm thành công')
-            $('myModal').css('display', '');
-            window.location.href = '/rules';
+        try {
+            const responseData = await handleFormSubmit(e);
+            if (responseData.code === 1) {    
+                $(`.err1`).html(responseData[`err1`]);
+                $(`.err2`).html(responseData[`err2`]);
+                $(`.err3`).html(responseData[`err3`]);
+            } else {
+                $('#notificationTextbox').val('Thêm thành công')
+                $('#myModal').css('display', '');            
+            }
         }
+        catch (err) {
+            $('#notificationTextbox').val(err);
+            $('#myModal').css('display', '');            
+        }
+        
     });
 
     $("#rules-remove").on("submit", async (e) => {
-        const responseData = await handleFormSubmit(e);
-        if (responseData.code === 1) {    
-            $(`.err4`).html(responseData[`err4`]);
-        } else {
-            $('#notificationTextbox').val('Xóa thành công')
-            $('myModal').css('display', '');
-            window.location.href = '/rules';
+        try {
+            const responseData = await handleFormSubmit(e);    
+            $('#notificationTextbox').val(responseData.noti)
+            $('#myModal').css('display', '');
         }
+        catch (err) {
+            $('#notificationTextbox').val(err);
+            $('#myModal').css('display', '');
+        }                
     });    
 
     $("#rules-edit").on("submit", async (e) => {
-        const responseData = await handleFormSubmit(e);
-        if (responseData.code === 1) {    
-            $(`.err5`).html(responseData[`err5`]);     
-            $(`.err6`).html(responseData[`err6`]);     
-        } else {
-            $('#notificationTextbox').val('Cập nhật thành công')
-            $('myModal').css('display', '');
-            window.location.href = '/rules';
+        try {
+            const responseData = await handleFormSubmit(e);    
+            $('#notificationTextbox').val(responseData.noti)
+            $('#myModal').css('display', '');
         }
+        catch (err) {
+            $('#notificationTextbox').val(err);
+            $('#myModal').css('display', '');
+        }            
     });
 
     $("#add-submit").on("click", () => {        
