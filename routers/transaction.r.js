@@ -10,4 +10,6 @@ router.get('/', selectTransactionRender);
 
 router.post('/deposit', Deposit);
 
+router.post('/withdraw', Withdraw);
+
 module.exports = router;

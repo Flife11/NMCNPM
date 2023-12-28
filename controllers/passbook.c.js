@@ -1,9 +1,10 @@
 const SoTietKiem = require("../models/SoTietKiem.m");
 const LoaiTietKiem = require("../models/LoaiTietKiem.m");
+const QuyDinh = require("../models/QuyDinh.m");
 
 const OpenPassbookRender = async (req, res, next) => {
     try {
-        let interest = await LoaiTietKiem.select(['*']);
+        let interest = await LoaiTietKiem.select(["*"]);
         res.render('openPassbook', { title: 'Open Passbook' , interest: interest});
     }
     catch (error) {
@@ -25,15 +26,18 @@ const AddToDB = async (req, res, next) => {
         if(cccd.length != 12 && cccd.length != 9 ) { 
             return res.status(400).json({ error: "Số CCCD phải có độ dài là 9 hoặc 12" });
         }
-        if(amount < 100000) {
-            return res.status(400).json({ error: "Số tiền gửi phải lớn hơn 100.000" });
+
+        //check min amount
+        let minAmount = await QuyDinh.selectbyName("Tiền gửi tối thiểu");
+        if(amount < minAmount.MoTa) {
+            return res.status(400).json({ error: `Số tiền gửi phải lớn hơn ${minAmount.MoTa} ${minAmount.DonVi}` });
         }
 
         const tietKiem = new SoTietKiem(interest, name, address, cccd, opendate, amount, 1);
         await SoTietKiem.insert(tietKiem);
 
         //return a success message for ajax call
-        res.json({ success: "Mở sổ tiết kiệm thành công" });
+        return res.status(200).json({ success: "Mở sổ tiết kiệm thành công" });
     }
     catch (error) {
         return res.status(500).json({ error: error });

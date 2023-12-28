@@ -20,4 +20,13 @@ module.exports = class QuyDinh {
         }
         return cnt;
     }
+
+    static async selectbyName(name) {
+        try {
+            const data= await db.SelectFromTable(tbName, ["*"], `TenQuyDinh = N'${name}'`);
+            return data[0];
+        } catch (error) {
+            throw (error);
+        }
+    }
 }
