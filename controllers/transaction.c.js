@@ -57,7 +57,7 @@ const Deposit = async (req, res, next) => {
 
         //check if passbook has term
         const interest = await LoaiTietKiem.selectbyID(passbook[0].MaLoaiTietKiem);
-        if (interest[0].SoThang) {
+        if (interest.SoThang) {
             return res.status(400).json({ error: "Không thể gửi tiền cho sổ có kỳ hạn" });
         }
         //check min amount
@@ -119,11 +119,11 @@ const Withdraw = async (req, res, next) => {
         }
 
         let interest = await LoaiTietKiem.selectbyID(passbook[0].MaLoaiTietKiem);
-        if (interest[0].SoThang) { // sổ có kỳ hạn
-            if (differenceInDays < interest[0].SoThang * 30) {
+        if (interest.SoThang) { // sổ có kỳ hạn
+            if (differenceInDays < interest.SoThang * 30) {
                 let ngayDaoHanObj = new Date(ngayMoSoObj.getTime());
-                ngayDaoHanObj.setDate(ngayDaoHanObj.getDate() + interest[0].SoThang * 30);
-                return res.status(400).json({ error: `Chưa đến ngày đáo hạn, không thể rút!\n (Ngày mở sổ: ${passbook[0].NgayMoSo}\nKì hạn: ${interest[0].MoTa}\nNgày đáo hạn: ${ngayDaoHanObj})` });
+                ngayDaoHanObj.setDate(ngayDaoHanObj.getDate() + interest.SoThang * 30);
+                return res.status(400).json({ error: `Chưa đến ngày đáo hạn, không thể rút!\n (Ngày mở sổ: ${passbook[0].NgayMoSo}\nKì hạn: ${interest.MoTa}\nNgày đáo hạn: ${ngayDaoHanObj})` });
             }
             if (amount > passbook[0].SoTien) {
                 return res.status(400).json({ error: "Số tiền rút không được lớn hơn số tiền hiện có" });
@@ -134,7 +134,7 @@ const Withdraw = async (req, res, next) => {
             }
 
             //để ý công thức chỗ này có sai hong ?
-            let total = passbook[0].SoTien + passbook[0].SoTien * interest[0].LaiSuat / 100 * parseInt(parseInt((differenceInDays) / 30) / interest[0].SoThang) * interest[0].SoThang;
+            let total = passbook[0].SoTien + passbook[0].SoTien * interest.LaiSuat / 100 * parseInt(parseInt((differenceInDays) / 30) / interest.SoThang) * interest.SoThang;
             const giaoDich = new GiaoDich(id, date, total);
 
             await GiaoDich.insertWithdraw(giaoDich);
@@ -144,10 +144,10 @@ const Withdraw = async (req, res, next) => {
             let success = "Rút tiền thành công! \n";
             success += "Số tiền gốc: " + passbook[0].SoTien + "\n";
             success += "Số tháng đã gửi: " + parseInt(differenceInDays / 30) + "\n";
-            success += "Kì hạn: " + interest[0].SoThang + "\n";
-            success += "Số lần đáo hạn: " + parseInt(parseInt(differenceInDays / 30) / interest[0].SoThang) + "\n";
-            success += "Lãi suất: " + interest[0].LaiSuat + "%\n";
-            success += "Số tiền lãi: " + passbook[0].SoTien * interest[0].LaiSuat / 100 * parseInt(parseInt(differenceInDays / 30) / interest[0].SoThang) * interest[0].SoThang + "\n";
+            success += "Kì hạn: " + interest.SoThang + "\n";
+            success += "Số lần đáo hạn: " + parseInt(parseInt(differenceInDays / 30) / interest.SoThang) + "\n";
+            success += "Lãi suất: " + interest.LaiSuat + "%\n";
+            success += "Số tiền lãi: " + passbook[0].SoTien * interest.LaiSuat / 100 * parseInt(parseInt(differenceInDays / 30) / interest.SoThang) * interest.SoThang + "\n";
             success += "Tổng tiền: " + total + "\n";
             success += "Số tiền còn lại: " + 0 + "\n";
             success += "Sổ đã đóng";
@@ -158,7 +158,7 @@ const Withdraw = async (req, res, next) => {
         if (amount > passbook[0].SoTien) {
             return res.status(400).json({ error: "Số tiền rút không được lớn hơn số tiền hiện có" });
         }
-        let total = amount + passbook[0].SoTien * interest[0].LaiSuat / 100 * parseInt(differenceInDays / 30);
+        let total = amount + passbook[0].SoTien * interest.LaiSuat / 100 * parseInt(differenceInDays / 30);
         const giaoDich = new GiaoDich(id, date, total);
         await GiaoDich.insertWithdraw(giaoDich);
 
@@ -174,8 +174,8 @@ const Withdraw = async (req, res, next) => {
         success += "Số tháng đã gửi: " + parseInt(differenceInDays / 30) + "\n";
         success += "Kì hạn: " + "Không có kì hạn, mặc định 1 tháng" + "\n";
         success += "Số lần đáo hạn: " + parseInt(differenceInDays / 30)  + "\n";
-        success += "Lãi suất: " + interest[0].LaiSuat + "%\n ";
-        success += "Số tiền lãi: " + passbook[0].SoTien * interest[0].LaiSuat / 100 * parseInt(differenceInDays / 30) + "\n";
+        success += "Lãi suất: " + interest.LaiSuat + "%\n ";
+        success += "Số tiền lãi: " + passbook[0].SoTien * interest.LaiSuat / 100 * parseInt(differenceInDays / 30) + "\n";
         success += "Tổng tiền: " + total + "\n";
         success += "Số tiền còn lại: " + newAmount +"\n";
         success += "Sổ đã đóng: " + (newAmount == 0 ? "Có\n" : "Không\n");
