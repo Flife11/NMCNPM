@@ -20,9 +20,12 @@
         </div>
         <button id="report-submit" type="button" class="fw-bold text-black btn btn-secondary">Xem</button>
     </form>
-    <div class="card d-flex m-auto" style="width: 80%;">
+    <div class="card d-flex m-auto" style="width: 80%; overflow:hidden;
+    overflow-y: scroll; height: 500px;">
         <table class="table">
-            <thead>
+            <thead style="top: 0;
+    z-index: 2;
+    position: sticky;">
                 <tr>
                     <th scope="col">Số thứ tự</th>
                     <th scope="col">Ngày</th>
