@@ -17,7 +17,7 @@
                                 <input type="hidden" name="ID_{{@index}}" value="{{@index}}">
                                 <label for="interest{{@index}}" class="col fs-4">{{this.MoTa}}</label>
                                 <div class="col fs-5 ">{{this.LaiSuat}}%</div>
-                                <input class="col w-100 fs-5 text-start" type="text" name="interest_{{@index}}" placeholder="#Bỏ trống nếu không cần nhập">
+                                <input class="col w-100 fs-5 text-start" type="number" name="interest_{{@index}}" placeholder="#Bỏ trống nếu không cần nhập">
                             </div>
                         {{/each}}
                     </div>
@@ -50,8 +50,8 @@
         const response = await fetch(url, fetchOptions);
 
         if (!response.ok) {
-            const errorMessage = await response.text();
-            throw new Error(errorMessage);
+            const errorMessage = await response.json();
+            throw new Error(errorMessage.error);
         }
 
         return response.json();
@@ -68,7 +68,7 @@
             return responseData;
         }
         catch (error) {
-            console.error(error);
+            throw(error);
         }
     }    
 

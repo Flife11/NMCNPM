@@ -133,6 +133,11 @@ const MonthReport = async (req, res, next) => {
     try {
         const result = [];
         const {date, attribute} = req.body;
+        //console.log(date, req.body, 1);
+        if (date=='') {
+            return res.status(400).json({error: "Tháng cần lập báo cáo không được trống"});
+        }
+
         const [year, month] = [...date.split('-')];        
         const somo = await SoMo(month, year, attribute);
         const sodong = await SoDong(month, year, attribute);

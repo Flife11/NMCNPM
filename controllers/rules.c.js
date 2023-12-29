@@ -112,12 +112,16 @@ const PeriodEdit = async (req, res, next) => {
 
 const InterestUpdate = async (req, res, next) => {
     try {        
-        const interest = req.body;
+        const interest = req.body;        
+
         const ID = [];
         const inter = [];
         let cnt = 0;
         for (var key in interest) {
             // console.log(key);
+            if (parseFloat(interest[key])<0) {
+                return res.status(400).json({"error": "Lãi suất tồn tại giá trị không hợp lệ"})
+            }
             if (cnt % 2 == 0) ID.push(parseInt(interest[key])+1);
             else inter.push(parseFloat(interest[key]));
             cnt+=1;
@@ -133,12 +137,34 @@ const InterestUpdate = async (req, res, next) => {
     }
 }
 
+function checkRules(name, val) {
+    //console.log(name);
+    //b = name;
+    name = String(name.replace(/\s+/g, ""))  
+    switch(name) {        
+        case String('Tiền gửi tối thiểu'.replace(/\s+/g, "")): {
+            if (parseInt(val)<0) return "Số tiền gửi tối thiểu không được âm";
+            break;
+        }
+        case String('Thời gian gửi tối thiểu'.replace(/\s+/g, "")): {
+            console.log(val, parseInt(val)<0);
+            if (parseInt(val)<=0) return "Thời gian gửi tối thiểu phải lớn hơn 0";
+            break;
+        }        
+    }
+    return 1;
+}
+
 const RuleUpdate = async (req, res, next) => {
     try {        
         const opt = req.body;
         const name = [];
         const val = [];
         for (var key in opt) {
+            var error = checkRules(key, opt[key]);            
+            if (error!=1) {
+                return res.status(400).json({"error": error});
+            }
             name.push(key);
             val.push(parseInt(opt[key]));
         }
