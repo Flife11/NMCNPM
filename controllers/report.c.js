@@ -14,7 +14,7 @@ async function tongThuSTK(arr, colName, ltk) {
 async function tongThuGiaodich(arr, colName, mota) {
     var res = 0;    
     const l = await LoaiTietKiem.selectbyName(mota);
-    console.log(arr, mota);
+    //console.log(arr, mota);
     for (var s of arr) {        
         const stk = await SoTietKiem.selectbyID(s.MaSoTietKiem);
         //console.log(stk, 1);
@@ -28,6 +28,11 @@ const DayReport = async (req, res, next) => {
         const {date} = req.body;
         const loaiTietKiem = await LoaiTietKiem.select(['*']);
         const result = [];
+        //console.log(new Date(date));
+        //console.log
+        if (new Date(date) > new Date()) {
+            return res.status(400).json({"error": "Ngày báo cáo không được lớn hơn ngày hiện tại"});
+        }
 
         const stk = await SoTietKiem.selectbyAttr("NgayMoSo", date);
         const rut = await GiaoDich.selectWithdrawby("NgayRut" , date);
