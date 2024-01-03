@@ -28,7 +28,10 @@ const DayReport = async (req, res, next) => {
         const {date} = req.body;
         const loaiTietKiem = await LoaiTietKiem.select(['*']);
         const result = [];
-        //console.log(new Date(date));
+        //console.log(typeof(new Date(date)));
+        if (new Date(date)=='Invalid Date') {
+            return res.status(400).json({"error": "Ngày báo cáo không được bỏ trống"});
+        }
         //console.log
         if (new Date(date) > new Date()) {
             return res.status(400).json({"error": "Ngày báo cáo không được lớn hơn ngày hiện tại"});
@@ -141,6 +144,9 @@ const MonthReport = async (req, res, next) => {
         //console.log(date, req.body, 1);
         if (date=='') {
             return res.status(400).json({error: "Tháng cần lập báo cáo không được trống"});
+        }
+        if (new Date(date) > new Date()) {
+            return res.status(400).json({"error": "Tháng báo cáo không được lớn hơn ngày hiện tại"});
         }
 
         const [year, month] = [...date.split('-')];        
