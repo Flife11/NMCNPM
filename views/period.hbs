@@ -49,31 +49,7 @@
                     <button id="remove-submit" type="button" class="mt-3 fw-bold fs-4 w-75 text-black btn btn-danger">Xóa</button>
                 </div>
             </form>
-        </div>
-        <div class="card " style="margin: 2vh;width:33%;border-radius:20px;
-        box-shadow: inset 0 0.5px 6px rgba(0,0,0,0.5);">
-            <form class="card-body" method="post" name="edit" action="/rules/edit" id="rules-edit">
-                <h2 class="text-center fw-bold">Sửa</h2>
-                <span class="w-100 bg-dark" style="height: 2px; display: block; content: "";"></span>
-                <div class="input-container mt-5">
-                    <div class="d-flex flex-column container">
-                        <label class="mb-3 fs-3 fw-bold text-center" for="kyhan_sua">Loại kỳ hạn gốc: </label>
-                        <input type="text" name="kyhan_sua" placeholder="# Nhập loại kỳ hạn muốn sửa"
-                            style="font-size: 20px; ">
-                        <div class="err5 text-danger"></div>
-                    </div>
-                    <div class="d-flex flex-column container mt-5">
-                        <label class="mb-3 fs-3 fw-bold text-center" for="kyhan_moi">Loại kỳ hạn sau khi sửa: </label>
-                        <input type="text" name="kyhan_moi" placeholder="# Kỳ hạn sẽ sửa thành"
-                            style="font-size: 20px; ">
-                        <div class="err6 text-danger"></div>
-                    </div>
-                </div>
-                <div class="container m-5">
-                    <button id="edit-submit" type="button" class="mt-3 fw-bold fs-4 w-75 text-black btn btn-warning">Cập nhật</button>
-                </div>
-            </form>
-        </div>
+        </div>        
     </div>
     <button type="button" onclick="history.back();"
         class="m-auto mt-5 ps-5 pe-5 d-flex fw-bold fs-4 text-black btn btn-light">Trở về</button>
@@ -149,27 +125,13 @@
             $('#myModal').css('display', '');
         }                
     });    
-
-    $("#rules-edit").on("submit", async (e) => {
-        try {
-            const responseData = await handleFormSubmit(e);    
-            $('#notificationTextbox').val(responseData.noti)
-            $('#myModal').css('display', '');
-        }
-        catch (err) {
-            $('#notificationTextbox').val(err);
-            $('#myModal').css('display', '');
-        }            
-    });
+    
 
     $("#add-submit").on("click", () => {        
         $("#rules-add").trigger('submit');
     })
     $("#remove-submit").on("click", () => {        
         $("#rules-remove").trigger('submit');
-    })
-    $("#edit-submit").on("click", () => {        
-        $("#rules-edit").trigger('submit');
-    })
+    })    
     
 </script>
