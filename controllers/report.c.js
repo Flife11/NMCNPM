@@ -142,6 +142,9 @@ const MonthReport = async (req, res, next) => {
         if (date=='') {
             return res.status(400).json({error: "Tháng cần lập báo cáo không được trống"});
         }
+        if (new Date(date) > new Date()) {
+            return res.status(400).json({"error": "Tháng báo cáo không được lớn hơn ngày hiện tại"});
+        }
 
         const [year, month] = [...date.split('-')];        
         const somo = await SoMo(month, year, attribute);
