@@ -14,8 +14,9 @@ module.exports = class SoTietKiem {
 
     static async insert(tietKiem) {
         try {
-            db.InsertToTable(tbName, ["MaLoaiTietKiem", "HoTenKhachHang", "DiaChi", "CMND", "NgayMoSo", "SoTien",IDName],
+            let insertData = await db.InsertToTable(tbName, ["MaLoaiTietKiem", "HoTenKhachHang", "DiaChi", "CMND", "NgayMoSo", "SoTien",IDName],
             [tietKiem.MaLoaiTietKiem, tietKiem.HoTenKhachHang, tietKiem.DiaChi, tietKiem.CMND, tietKiem.NgayMoSo, tietKiem.SoTien]);
+            return insertData;
         } catch (error) {
             throw(error);
         }

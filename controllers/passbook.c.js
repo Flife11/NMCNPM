@@ -34,10 +34,15 @@ const AddToDB = async (req, res, next) => {
         }
 
         const tietKiem = new SoTietKiem(interest, name, address, cccd, opendate, amount, 1);
-        await SoTietKiem.insert(tietKiem);
+        let InsertedData = await SoTietKiem.insert(tietKiem);
+        //InsertedData is a object, for each property in InsertedData, make it a string `key: value\n`
+        let message = `Mở sổ tiết kiệm thành công\n`;
+        for (const [key, value] of Object.entries(InsertedData)) {
+            message += `${key}: ${value}\n`;
+        }
 
         //return a success message for ajax call
-        return res.status(200).json({ success: "Mở sổ tiết kiệm thành công" });
+        return res.status(200).json({ success: message });
     }
     catch (error) {
         return res.status(500).json({ error: error });

@@ -1,8 +1,8 @@
 const sql = require('mssql')
 
 const config = {
-  user: "sang123",
-  password: "1234",
+  user: "sa",
+  password: "0902894946orenji",
   database: "QuanLySoTietKiem",
   server: 'localhost',
   pool: {
@@ -70,8 +70,16 @@ module.exports = {
             //console.log(val);
             //console.log(`insert into ${tbName}(${colName.join()}) values(${val.join()})`)
             const result1 = await Request.query(`insert into ${tbName}(${colName.join()}) values(${val.join()})`);
-            //console.log(result1);
-            //return result1.recordsets;
+            //console.log(result1); //empty recordset
+            let insertObject = {};
+            colName.forEach((col, index) => {
+                insertObject[col] = val[index];
+            })
+            //console.log(insertObject);
+            return insertObject;
+            
+
+            //return ;
         } catch (err) {
             console.log(err);
             throw(err);          
