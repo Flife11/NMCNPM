@@ -61,18 +61,37 @@ const PeriodAdd = async (req, res, next) => {
     try {
         const MoTa = req.body["kyhan_them"];
         const SoThang = req.body["thang"];
-        const LaiSuat = req.body["laisuat"];
-        const result = {code: 0, err1: "", err2: "", err3: ""};
+        const LaiSuat = req.body["laisuat"];  
+        
+        // Kiểm tra tên kỳ hạn phải là [số]+tháng hoặc là không kỳ hạn
+        if (!/(^\d+ tháng)|(Không kỳ hạn)/.test(MoTa)) {
+            return res.status(400).json({error: 'Định dạng tên kỳ hạn không hợp lệ. Tên định dạng hợp lệ bao gồm [số tháng]+" tháng" hoặc là Không kỳ hạn'});
+        }
+
+        // Kiểm tra số tháng phải là ký số
+        if (!/^\d+/.test(SoThang)) {
+            return res.status(400).json({error: 'Số tháng phải là ký số'});
+        }
+
+        // Số tháng và tên kỳ hạn phải giống nhau
+        if (parseInt(MoTa.match(/(^\d+)/)[0])!=parseInt(SoThang)) {
+            return res.status(400).json({error: 'Số tháng và tên kỳ hạn không khớp'});
+        }
+
+        // Kiểm tra số tháng phải là số nguyên dương
+        if (Number.isInteger(parseInt(SoThang)) && parseInt(SoThang)<=0) {
+            return res.status(400).json({error: 'Số tháng phải là số nguyên dương'});
+        }
+
         try {
-            if (MoTa=='' || LaiSuat=='') {
-                result.code = 1;
-                if (MoTa=='') result.err1="Mô tả về kỳ hạn không được để trống";
-                if (LaiSuat=='') result.err3="Lãi suất không được để trống";
+            if (MoTa=='' || LaiSuat=='') {                
+                if (MoTa=='') return res.status(400).json({error: "Mô tả về kỳ hạn không được để trống"});
+                if (LaiSuat=='') return res.status(400).json({error: "Lãi suất không được để trống"});
             }
             else {
                 LoaiTietKiem.insert(new LoaiTietKiem(MoTa, SoThang, LaiSuat));                
             }
-            res.status(201).json(result);
+            res.status(201).json({noti: "Thêm thành công"});
         } catch (error) {
             next(error);
         }
@@ -141,7 +160,7 @@ function checkRules(name, val) {
     //console.log(name);
     //b = name;
     name = String(name.replace(/\s+/g, ""))  
-    switch(name) {        
+    switch(name) {
         case String('Tiền gửi tối thiểu'.replace(/\s+/g, "")): {
             if (parseInt(val)<0) return "Số tiền gửi tối thiểu không được âm";
             break;

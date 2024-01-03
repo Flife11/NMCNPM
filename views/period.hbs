@@ -98,8 +98,8 @@
         const response = await fetch(url, fetchOptions);
 
         if (!response.ok) {
-            const errorMessage = await response.text();
-            throw new Error(errorMessage);
+            const errorMessage = await response.json();
+            throw new Error(errorMessage.error);
         }
 
         return response.json();
@@ -116,7 +116,7 @@
             return responseData;
         }
         catch (error) {
-            console.error(error);
+            throw(error);
         }
     }
 
@@ -128,14 +128,8 @@
     $("#rules-add").on("submit", async (e) => {
         try {
             const responseData = await handleFormSubmit(e);
-            if (responseData.code === 1) {    
-                $(`.err1`).html(responseData[`err1`]);
-                $(`.err2`).html(responseData[`err2`]);
-                $(`.err3`).html(responseData[`err3`]);
-            } else {
-                $('#notificationTextbox').val('Thêm thành công')
-                $('#myModal').css('display', '');            
-            }
+            $('#notificationTextbox').val('Thêm thành công')
+            $('#myModal').css('display', '');
         }
         catch (err) {
             $('#notificationTextbox').val(err);
