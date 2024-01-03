@@ -38,7 +38,10 @@ const Deposit = async (req, res, next) => {
         }
         const passbook = await SoTietKiem.selectbyID(id);
 
-        
+        // check if amount negative
+        if(parseInt(amount) < 0){
+            return res.status(400).json({ error: "Số tiền gửi không được âm" });
+        }        
 
         //check if passbook exists
         if (passbook.length == 0) {
@@ -89,6 +92,12 @@ const Withdraw = async (req, res, next) => {
         }
         amount = parseInt(amount);
         const passbook = await SoTietKiem.selectbyID(id);
+
+        // check if amount negative
+        if (amount < 0) {
+            return res.status(400).json({ error: "Số tiền rút không được âm" });
+        }
+
         //check if passbook exists
         if (passbook.length == 0) {
             return res.status(400).json({ error: "Sổ tiết kiệm không tồn tại" });
